@@ -39,10 +39,10 @@ class Cart {
             const product = productList.getProductById(id);
             total += product.price * this.cart[id];
             cartDomSting += 
-                `<div class="row" data-id="${id}"> 
-                    <div class="col-5">${product.title}</div>
-                    <div class="col-3">${product.price}</div>
-                    <div class="col-2">${this.cart[id]}</div>
+                `<div class="row" data-id="ua{id}"> 
+                    <div class="col-5">ua{product.title}</div>
+                    <div class="col-3">ua{product.price}</div>
+                    <div class="col-2">ua{this.cart[id]}</div>
                     <div class="col-1"><button class="btn btn-sm plus">+</button></div>
                     <div class="col-1"><button class="btn btn-sm minus">-</button></div>
                 </div>`;
@@ -51,7 +51,7 @@ class Cart {
         cartDomSting += `
                 <div class="row">
                     <div class="col-5"><strong>TOTAL</strong></div>
-                    <div class="col-3"><strong>$${total}</strong></div>
+                    <div class="col-3"><strong>${total}</strong></div>
                 </div>            
         </div>`;
         this.cartContainer.find('.cart-product-list-container').html(cartDomSting);
@@ -59,7 +59,7 @@ class Cart {
         this.cartContainer.find('.minus').click( ev => this.changeQuantity(ev, this.deleteProduct) );
     }
     changeQuantity(ev, operation) {
-        const button = $(ev.target);
+        const button = ua(ev.target);
         const id = button.parent().parent().data('id');
         operation.call(this, id);
         this.renderCart();
@@ -75,8 +75,8 @@ class Cart {
                 url: "https://formspree.io/YOUR_EMAIL_HERE", 
                 method: "POST",
                 data: {
-                    clientName: $('#client-name').val(),
-                    clientEmail: $('#client-email').val(),
+                    clientName: ua('#client-name').val(),
+                    clientEmail: ua('#client-email').val(),
                     cart: this.cart
                 },
                 dataType: "json"
